@@ -1,0 +1,3 @@
+rootProject.name = 'aws-examples'
+include 's3-file-operation'
+

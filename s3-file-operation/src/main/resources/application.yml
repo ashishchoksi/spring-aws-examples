@@ -1,0 +1,12 @@
+server:
+  port: 8081
+
+cloud:
+  aws:
+    cred:
+      access-key: <your_key>
+      secret-key: <your-secret>
+
+application:
+  bucket:
+    name: ashish-test-s3-simpe-bucket
