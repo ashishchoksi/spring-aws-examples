@@ -72,4 +72,10 @@ public class StorageService {
         }
         return data;
     }
+
+    public void deleteFile(String fileName) {
+        log.info("trying to delete file {}", fileName);
+        s3Client.deleteObject(bucketName, fileName);
+        log.info("file deleted successfully.");
+    }
 }

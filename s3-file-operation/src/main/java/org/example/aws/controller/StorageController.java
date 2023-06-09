@@ -41,4 +41,9 @@ public class StorageController {
                 .body(byteArrayResource);
     }
 
+    @DeleteMapping("/file/{fileName}")
+    public ResponseEntity<String> deleteFile(@PathVariable String fileName) {
+        storageService.deleteFile(fileName);
+        return ResponseEntity.ok("File deleted successfully!");
+    }
 }
