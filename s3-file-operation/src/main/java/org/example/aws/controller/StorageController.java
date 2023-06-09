@@ -1,6 +1,9 @@
 package org.example.aws.controller;
 
 import org.example.aws.service.StorageService;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,9 +26,19 @@ public class StorageController {
     }
 
     @GetMapping("/files")
-    public List<String> listAllFiles() {
+    public ResponseEntity<List<String>> listAllFiles() {
         List<String> files = storageService.listAllFiles();
-        return files;
+        return ResponseEntity.ok(files);
+    }
+
+    @GetMapping("/file/{fileName}")
+    public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable String fileName) {
+        byte[] data = storageService.downloadFile(fileName);
+        ByteArrayResource byteArrayResource = new ByteArrayResource(data);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=%s", fileName))
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(byteArrayResource);
     }
 
 }

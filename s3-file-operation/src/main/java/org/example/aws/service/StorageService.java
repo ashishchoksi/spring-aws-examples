@@ -2,7 +2,10 @@ package org.example.aws.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectListing;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.amazonaws.util.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -56,4 +59,17 @@ public class StorageService {
         return newFile;
     }
 
+    public byte[] downloadFile(String fileName) {
+        log.info("Try to download file: {}", fileName);
+        S3Object s3Object = s3Client.getObject(bucketName, fileName);
+        S3ObjectInputStream objectContent = s3Object.getObjectContent();
+        byte[] data;
+        try {
+            data = IOUtils.toByteArray(objectContent);
+        } catch (IOException e) {
+            log.error("Failed to read content from s3");
+            return null;
+        }
+        return data;
+    }
 }
