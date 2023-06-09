@@ -4,8 +4,9 @@ server:
 cloud:
   aws:
     cred:
-      access-key: <your_key>
-      secret-key: <your-secret>
+      access-key: <>
+      secret-key: <>
+      region: us-east-1
 
 application:
   bucket:
